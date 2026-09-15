@@ -1,0 +1,28 @@
+/* Identidad visual de LLLM: verde pino sobre fondo nocturno,
+   serif editorial para las voces y monoespaciada para el codigo. */
+:root {
+  --bg: #101a14;
+  --bg-side: #0b140f;
+  --bg-panel: #182620;
+  --bg-panel-hover: #1f2f27;
+  --text: #e4ece6;
+  --text-muted: #6f8578;
+  --accent: #3e8f63;
+  --accent-soft: rgba(62, 143, 99, 0.14);
+  --border: #22342a;
+  --danger: #c25b4e;
+  --warning: #c79a4a;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 38px;
+
+  --radius: 5px;
+  --sidebar-width: 210px;
+}
