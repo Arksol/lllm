@@ -8,7 +8,8 @@ from fastapi import FastAPI
 
 from app.api.router import api_router
 from app.config import settings
-from app.core import exceptions, logging as log, middleware
+from app.core import exceptions, middleware
+from app.core import logging as log
 from app.database import create_all
 
 
@@ -21,7 +22,9 @@ async def lifespan(app: FastAPI):  # noqa: ANN201, ARG001
 
 app = FastAPI(
     title="LLLM",
-    description="Large Language Learning Model — analiza repositorios con el modelo que elijas.",
+    description=(
+        "Large Language Learning Model — analiza repositorios con el modelo que elijas."
+    ),
     version="0.1.0",
     lifespan=lifespan,
     docs_url="/docs" if settings.debug else None,

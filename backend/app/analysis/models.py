@@ -31,10 +31,10 @@ class Analysis(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     finished_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
-    citations: Mapped[list["AnalysisCitation"]] = relationship(
+    citations: Mapped[list[AnalysisCitation]] = relationship(
         back_populates="analysis", cascade="all, delete-orphan"
     )
-    findings: Mapped[list["AnalysisFinding"]] = relationship(
+    findings: Mapped[list[AnalysisFinding]] = relationship(
         back_populates="analysis", cascade="all, delete-orphan"
     )
 

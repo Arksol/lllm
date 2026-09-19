@@ -8,10 +8,13 @@ y se avisa al usuario en la interfaz.
 from __future__ import annotations
 
 import json
+import logging
 import os
 import stat
 
 from app.config import settings
+
+_log = logging.getLogger(__name__)
 
 SERVICE = "lllm"
 _FALLBACK = settings.data_dir / "credentials.json"
@@ -52,8 +55,9 @@ def delete(ref: str | None) -> None:
     if _keyring_available:
         try:
             keyring.delete_password(SERVICE, ref)
-        except Exception:  # noqa: BLE001
-            pass
+        except Exception as exc:  # noqa: BLE001
+            # Borrar algo que ya no esta no es un error para el usuario.
+            _log.debug("No se pudo borrar la clave del llavero: %s", exc)
         return
     data = _read_fallback()
     data.pop(ref, None)

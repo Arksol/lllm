@@ -11,7 +11,9 @@ from app.settings.models import ModelProfile
 from app.settings.schemas import ProfileCreate
 
 
-async def probe(provider: str, api_key: str | None, base_url: str | None) -> list[ModelInfo]:
+async def probe(
+    provider: str, api_key: str | None, base_url: str | None
+) -> list[ModelInfo]:
     """Comprueba credenciales y devuelve los modelos disponibles."""
     return await factory.build_transient(provider, api_key, base_url).list_models()
 

@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import json
 import shutil
-import subprocess
+
+# Solo se invocan analizadores estaticos ya instalados en el sistema.
+import subprocess  # nosec B404
 from pathlib import Path
 
 from app.repos.schemas import RepoFile
@@ -60,9 +62,14 @@ def available_tools() -> list[str]:
 
 
 def _run_semgrep(root: str) -> list[SecurityFinding]:
+    executable = shutil.which("semgrep")
+    if executable is None:
+        return []
     try:
-        result = subprocess.run(  # noqa: S603
-            ["semgrep", "--config", "auto", "--json", "--quiet", root],
+        # Argumentos literales y sin shell: lo unico variable es el directorio
+        # temporal que creamos nosotros.
+        result = subprocess.run(  # noqa: S603  # nosec B603
+            [executable, "--config", "auto", "--json", "--quiet", root],
             capture_output=True, text=True, timeout=600, check=False,
         )
         payload = json.loads(result.stdout or "{}")
@@ -87,9 +94,14 @@ def _run_semgrep(root: str) -> list[SecurityFinding]:
 
 
 def _run_bandit(root: str) -> list[SecurityFinding]:
+    executable = shutil.which("bandit")
+    if executable is None:
+        return []
     try:
-        result = subprocess.run(  # noqa: S603
-            ["bandit", "-r", root, "-f", "json", "-q"],
+        # Argumentos literales y sin shell: lo unico variable es el directorio
+        # temporal que creamos nosotros.
+        result = subprocess.run(  # noqa: S603  # nosec B603
+            [executable, "-r", root, "-f", "json", "-q"],
             capture_output=True, text=True, timeout=600, check=False,
         )
         payload = json.loads(result.stdout or "{}")

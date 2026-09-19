@@ -18,8 +18,9 @@ def health() -> dict:
 
 @api_router.get("/health/ready", tags=["salud"])
 def ready() -> dict:
-    from app.database import engine
     from sqlalchemy import text
+
+    from app.database import engine
 
     try:
         with engine.connect() as connection:

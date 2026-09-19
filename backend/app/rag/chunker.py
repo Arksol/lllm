@@ -61,7 +61,9 @@ def _chunk_python(path: str, text: str) -> list[Chunk]:
 
     covered = {n for c in chunks for n in range(c.start_line, c.end_line + 1)}
     preamble = [
-        (i + 1, line) for i, line in enumerate(lines) if i + 1 not in covered and line.strip()
+        (i + 1, line)
+        for i, line in enumerate(lines)
+        if i + 1 not in covered and line.strip()
     ]
     if preamble:
         chunks.insert(

@@ -29,7 +29,8 @@ def verify(citations: list[Citation], chunks: list[Chunk]) -> list[VerifiedCitat
 
     verified: list[VerifiedCitation] = []
     for citation in citations:
-        chunk = by_title.get(f"{citation.file_path}#L{citation.start_line}-{citation.end_line}")
+        title = f"{citation.file_path}#L{citation.start_line}-{citation.end_line}"
+        chunk = by_title.get(title)
         if chunk is None:
             chunk = _find_by_text(citation.text, by_path.get(citation.file_path, []))
         if chunk is None:

@@ -46,7 +46,9 @@ RULES: list[dict] = [
     },
     {
         "id": "cors-abierto",
-        "pattern": re.compile(r"allow_origins\s*=\s*\[\s*[\"']\*[\"']|origin:\s*[\"']\*[\"']"),
+        "pattern": re.compile(
+            r"allow_origins\s*=\s*\[\s*[\"']\*[\"']|origin:\s*[\"']\*[\"']"
+        ),
         "message": "CORS abierto a cualquier origen.",
         "severity": Severity.MEDIUM,
         "suffixes": None,
