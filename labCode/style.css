@@ -1,0 +1,19 @@
+.app-summary {
+    background-color: #f5f7fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-summary h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.app-summary p {
+    color: #34495e;
+    line-height: 1.6;
+    margin: 0;
+}
