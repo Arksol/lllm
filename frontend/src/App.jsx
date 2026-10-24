@@ -7,7 +7,7 @@ import { HistoryPage } from "./pages/HistoryPage";
 import { RepositoriesPage } from "./pages/RepositoriesPage";
 import { DocumentationPage } from "./pages/DocumentationPage";
 import { SettingsPage } from "./pages/SettingsPage";
-import { api } from "./services/api";
+import { api } from "./api/client";
 
 export default function App() {
   const [activeProfile, setActiveProfile] = useState(null);

@@ -24,3 +24,6 @@ credentials.json
 *.log
 .env
 .DS_Store
+
+# instrucciones locales de Codex, personales (no se versionan)
+AGENTS.override.md

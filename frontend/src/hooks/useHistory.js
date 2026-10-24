@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { api } from "../services/api";
+import { api } from "../api/client";
 
 export function useHistory() {
   const [items, setItems] = useState([]);

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { api } from "../services/api";
+import { api } from "../api/client";
 
 // Perfiles de modelo guardados. Es lo que permite cambiar de proveedor sin
 // tocar el resto de la aplicacion.

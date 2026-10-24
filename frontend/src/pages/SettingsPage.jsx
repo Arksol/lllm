@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api } from "../services/api";
+import { api } from "../api/client";
 import { useProfiles } from "../hooks/useProfiles";
 
 // Aqui el usuario decide con que modelo trabaja. El flujo es siempre el mismo

@@ -5,7 +5,7 @@ import { ExplanationView } from "../components/ExplanationView";
 import { CitationPanel } from "../components/CitationPanel";
 import { SecurityFindings } from "../components/SecurityFindings";
 import { useAnalysis } from "../hooks/useAnalysis";
-import { api } from "../services/api";
+import { api } from "../api/client";
 
 export function ResultPage() {
   const { id } = useParams();

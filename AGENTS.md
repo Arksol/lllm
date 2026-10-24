@@ -1,2 +1,80 @@
-Ver CLAUDE.md. Ese archivo es la referencia de contexto del proyecto para
-cualquier asistente de programación.
+# LLLM — guía para agentes
+
+Aplicación de escritorio que analiza repositorios de código con el modelo de IA
+que el usuario elija. LLLM = Large Language Learning Model.
+
+Este archivo es la referencia común para cualquier asistente (Codex, Claude
+Code, Cursor, Copilot). `CLAUDE.md` solo lo importa.
+
+## Stack
+
+- `backend/`: Python · FastAPI · SQLite (motor local en 127.0.0.1:8756).
+- `frontend/`: React 18 · Vite · Vitest.
+- `src-tauri/`: contenedor de escritorio Tauri.
+
+## Comandos
+
+```bash
+# backend (desde backend/)
+python -m app.main        # arranca en 127.0.0.1:8756
+pytest                    # pruebas
+ruff check app            # estilo
+
+# frontend (desde frontend/)
+npm run dev               # puerto 1420, el que espera Tauri
+npm run build
+npm test
+
+# escritorio (desde frontend/)
+npm run tauri dev
+```
+
+## Estructura del frontend (`frontend/src/`)
+
+```
+api/          cliente del motor local (client.js); único sitio que hace fetch
+components/   piezas de interfaz; layout/ para el marco de la app
+hooks/        useAnalysis, useHistory, useProfiles
+pages/        una por ruta (Analysis, Result, History, Repositories, Settings, Documentation)
+utils/        funciones puras (validators.js)
+styles/       tokens.css y globals.css
+__tests__/    pruebas de Vitest
+```
+
+## Reglas de arquitectura
+
+- `analysis/service.py` es el único módulo que conoce a los demás dominios.
+  `repos`, `rag`, `llm` y `security_scan` no se importan entre sí.
+- Nunca importar un SDK de proveedor fuera de `llm/providers/`. El resto del
+  código habla con la interfaz `LLMProvider` de `llm/base.py`.
+- Añadir un proveedor: un archivo en `llm/providers/` + una línea en
+  `llm/registry.py`. Nada más debe cambiar. Si hace falta tocar otra cosa, la
+  abstracción está mal.
+- SQLite, no PostgreSQL. Es una app de escritorio: el usuario no debe instalar
+  ni administrar un servidor de base de datos.
+
+## Reglas de seguridad
+
+- El código descargado **nunca se ejecuta**. Solo lectura y análisis estático.
+- Los fragmentos van al modelo marcados como datos, nunca como instrucciones.
+- Toda cita se verifica contra los fragmentos enviados antes de mostrarse
+  (`rag/citations.py`). Una cita que no cuadra se descarta.
+- Las claves de API van a `settings/credentials.py`, nunca a la base de datos
+  ni a un log.
+- La validación de host en `repos/validators.py` no se relaja.
+
+## Convenciones
+
+- Los mensajes de error que ve el usuario van en español y dicen qué hacer.
+- Los nombres de estado en base de datos son en español: `en_cola`,
+  `procesando`, `listo`, `error`.
+- Comentarios solo donde el porqué no se deduce del código.
+- El diseño usa las variables de `frontend/src/styles/tokens.css`. No escribir
+  colores literales en los componentes.
+
+## Qué no tocar
+
+- Los prompts de `llm/prompts/analysis.py` incluyen la defensa contra inyección
+  de instrucciones. Al editarlos, conservar el bloque de reglas.
+- `frontend/src/main.jsx` usa `HashRouter` a propósito: en escritorio no hay
+  servidor que resuelva rutas.

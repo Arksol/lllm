@@ -1,0 +1,19 @@
+# Configuración de Codex para este proyecto. Las instrucciones viven en
+# AGENTS.md; aquí solo van ajustes de ejecución.
+#
+# Codex solo carga este archivo si el proyecto está marcado como de confianza.
+# Es deliberadamente conservador: pide permiso cuando lo necesita, escribe solo
+# dentro del proyecto y los comandos no salen a la red. Si una tarea necesita
+# red o más permisos, se conceden en la sesión, no aquí.
+
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[sandbox_workspace_write]
+network_access = false
+
+# Servidores MCP del proyecto (equivalente a .mcp.json en Claude Code).
+# Ninguno por ahora. Formato:
+# [mcp_servers.nombre]
+# command = "node"
+# args = ["ruta/al/servidor.js"]
