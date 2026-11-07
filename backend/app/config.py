@@ -33,7 +33,7 @@ class Settings(BaseSettings):
     allowed_origins: list[str] = [
         "http://localhost:1420",
         "http://127.0.0.1:1420",
-        "tauri://localhost",
+        "lllm://bundle",
     ]
     host: str = "127.0.0.1"
     port: int = 8756
@@ -62,3 +62,5 @@ class Settings(BaseSettings):
 settings = Settings()
 settings.data_dir.mkdir(parents=True, exist_ok=True)
 settings.workspace_dir.mkdir(parents=True, exist_ok=True)
+
+

@@ -82,7 +82,7 @@ El código de un repositorio ajeno es material no confiable, y se trata como tal
 
 ## Instalación
 
-Requisitos: Python 3.11+, Node 18+, y Rust si vas a empaquetar el escritorio.
+Requisitos de desarrollo: Python 3.11+ y Node.js 22+. Para empaquetar el escritorio en Windows también se necesita PyInstaller.
 
 ```bash
 git clone <url-del-repositorio> lllm
@@ -99,16 +99,31 @@ npm install
 npm run dev                 # http://localhost:1420
 ```
 
-Para la aplicación de escritorio completa:
+Para abrir la aplicación de escritorio durante el desarrollo, inicia primero el motor y Vite:
 
 ```bash
-npm run tauri dev           # desarrollo
-npm run tauri build         # instalador
+# Terminal 1, desde backend/
+python -m app.main
+
+# Terminal 2, desde frontend/
+npm run dev
+
+# Terminal 3, desde frontend/
+npm run desktop:dev
 ```
 
-Antes de `tauri build` hay que generar el binario del motor; los pasos están en
-`src-tauri/README.md`.
+Electron inicia y supervisa el backend local en `127.0.0.1:8756`; al cerrar la aplicación, termina el proceso del motor. Las claves siguen en el almacén del sistema (`keyring`). El frontend empaquetado usa el protocolo local seguro `lllm://bundle`.
 
+Para crear el instalador Windows (x64), desde `frontend/`:
+
+```bash
+python -m venv ../backend/.venv
+../backend/.venv/Scripts/python -m pip install -e "../backend[dev]"
+../backend/.venv/Scripts/python -m pip install pyinstaller
+npm run package:win
+```
+
+El comando crea el binario PyInstaller y lo incluye en el instalador NSIS con electron-builder. electron-updater consulta las versiones publicadas en GitHub.
 ## Variables de entorno
 
 Todas opcionales, con el prefijo `LLLM_`:
@@ -152,7 +167,8 @@ lllm/
 │       ├── analysis/       orquestación del pipeline
 │       └── settings/       perfiles de modelo y claves
 ├── frontend/       interfaz React + Vite
-├── src-tauri/      envoltura de escritorio
+├── frontend/electron/ proceso principal y ventana Electron
+├── backend/sidecar.py entrada del motor empaquetado
 └── docs/           arquitectura, decisiones, API
 ```
 
@@ -170,3 +186,5 @@ citar, revisar seguridad, guardar, regenerar y volver a preguntar.
 ## Licencia
 
 MIT.
+
+

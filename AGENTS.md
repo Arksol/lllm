@@ -9,8 +9,8 @@ Code, Cursor, Copilot). `CLAUDE.md` solo lo importa.
 ## Stack
 
 - `backend/`: Python · FastAPI · SQLite (motor local en 127.0.0.1:8756).
-- `frontend/`: React 18 · Vite · Vitest.
-- `src-tauri/`: contenedor de escritorio Tauri.
+- `frontend/`: React 19 · Vite · Vitest · Electron.
+- `frontend/electron/`: contenedor de escritorio Electron; el backend FastAPI corre como proceso local hijo.
 
 ## Comandos
 
@@ -21,12 +21,13 @@ pytest                    # pruebas
 ruff check app            # estilo
 
 # frontend (desde frontend/)
-npm run dev               # puerto 1420, el que espera Tauri
+npm run dev               # Vite en 127.0.0.1:1420
 npm run build
 npm test
 
 # escritorio (desde frontend/)
-npm run tauri dev
+npm run desktop:dev      # abre Electron (requiere backend y Vite activos)
+npm run package:win      # crea el instalador NSIS (Windows x64)
 ```
 
 ## Estructura del frontend (`frontend/src/`)
@@ -78,3 +79,5 @@ __tests__/    pruebas de Vitest
   de instrucciones. Al editarlos, conservar el bloque de reglas.
 - `frontend/src/main.jsx` usa `HashRouter` a propósito: en escritorio no hay
   servidor que resuelva rutas.
+
+

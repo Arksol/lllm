@@ -12,10 +12,7 @@ node_modules/
 dist/
 .vite/
 
-# Tauri
-src-tauri/target/
-src-tauri/binaries/*
-!src-tauri/binaries/.gitkeep
+# Electron packaging artifacts
 
 # Datos locales: nunca se versionan
 *.db
@@ -27,3 +24,8 @@ credentials.json
 
 # instrucciones locales de Codex, personales (no se versionan)
 AGENTS.override.md
+
+frontend/release/
+backend/build/
+backend/lllm-backend.spec
+frontend/build/
